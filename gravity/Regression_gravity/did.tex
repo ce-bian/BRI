@@ -1,0 +1,24 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{8}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}&\multicolumn{1}{c}{(7)}&\multicolumn{1}{c}{(8)}\\
+                    &\multicolumn{1}{c}{ln (import from ROW (excluding China))}&\multicolumn{1}{c}{ln (export to ROW (excluding China))}&\multicolumn{1}{c}{Imports to GDP ratio}&\multicolumn{1}{c}{Exports to GDP ratio}&\multicolumn{1}{c}{ln (import from ROW (excluding China))}&\multicolumn{1}{c}{ln (export to ROW (excluding China))}&\multicolumn{1}{c}{Imports to GDP ratio}&\multicolumn{1}{c}{Exports to GDP ratio}\\
+\hline
+bri\_entry           &      0.0505\sym{*}  &      0.0361         &      0.0390\sym{*}  &      0.0138         &      0.0413         &      0.0273         &      0.0306         &     0.00776         \\
+                    &    (0.0295)         &    (0.0325)         &    (0.0233)         &    (0.0102)         &    (0.0297)         &    (0.0321)         &    (0.0207)         &   (0.00964)         \\
+[1em]
+ln (GDP)            &       0.544\sym{***}&       0.608\sym{***}&                     &                     &       0.496\sym{***}&       0.589\sym{***}&                     &                     \\
+                    &    (0.0770)         &    (0.0984)         &                     &                     &    (0.0748)         &    (0.0936)         &                     &                     \\
+[1em]
+Constant            &       9.790\sym{***}&       9.043\sym{***}&       0.168\sym{***}&       0.431\sym{***}&       10.89\sym{***}&       8.889\sym{***}&       0.152\sym{***}&       0.231\sym{***}\\
+                    &     (1.950)         &     (2.486)         &   (0.00525)         &   (0.00523)         &     (1.891)         &     (2.364)         &   (0.00484)         &   (0.00480)         \\
+\hline
+Observations        &        1214         &        1212         &        1215         &        1215         &        1214         &        1212         &        1215         &        1215         \\
+\(R^{2}\)           &       0.996         &       0.990         &       0.882         &       0.961         &       0.996         &       0.990         &       0.857         &       0.951         \\
+\textit{AIC}        &     -1410.5         &       267.9         &     -2514.9         &     -3794.7         &     -1378.9         &       301.0         &     -2744.3         &     -3939.6         \\
+\hline\hline
+\multicolumn{9}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{9}{l}{\footnotesize \sym{*} \(p<0.10\), \sym{**} \(p<0.05\), \sym{***} \(p<0.01\)}\\
+\end{tabular}
+}

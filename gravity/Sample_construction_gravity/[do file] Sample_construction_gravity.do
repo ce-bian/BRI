@@ -241,6 +241,13 @@ replace bri=0 if bri==.
 drop _merge state_id
 gen brientry=1 if bri==1 &year>=entry_year
 replace brientry=0 if brientry==.
+
+* Classification
+merge m:1 iso3 using country_classification.dta
+sort _merge
+drop if _merge!=3
+drop country
+drop _merge
  
 gen ln_gdp=ln(gdp)
 gen ln_import_row=ln(import_row)
@@ -260,6 +267,103 @@ save all_reg_row_without_chn.dta, replace
  
  
  
+ 
+* +++++++ trade with ROW +++++++++++++
+use wits_all_2010-2018.dta, clear
+
+keep if partner_iso3=="All" 
+
+
+gen import_row=import if partner_iso3=="All"
+gen export_row=export if partner_iso3=="All"
+gen trade_row=trade if partner_iso3=="All"
+
+
+collapse (sum)import_row (sum)export_row (sum)trade_row , by (year country_iso3 country_name)
+
+* replicate country list
+rename country_iso3 iso3
+merge m:1 iso3 using "country_info.dta"
+drop if _merge!=3
+keep iso3 country_name year import_row export_row trade_row
+
+* GDP
+merge 1:1 year iso3 using "gdp_2010-2018.dta"
+drop if _merge!=3
+drop _merge
+
+* BRI
+merge m:1 iso3 using "bri_list_new.dta"
+drop if _merge==2
+gen bri=1 if _merge==3 
+replace bri=0 if bri==.
+drop _merge state_id
+gen brientry=1 if bri==1 &year>=entry_year
+replace brientry=0 if brientry==.
+
+* Classification
+merge m:1 iso3 using country_classification.dta
+sort _merge
+drop if _merge!=3
+drop country
+drop _merge
+ 
+gen ln_gdp=ln(gdp)
+gen ln_import_row=ln(import_row)
+gen ln_export_row=ln(export_row)
+gen ln_trade_row=ln(trade_row)
+
+la var ln_gdp "ln (GDP)"
+la var ln_import_row "ln (import from ROW)"
+la var ln_export_row "ln (export to ROW)"
+la var ln_trade_row "ln (trade with ROW)"
+la var bri "BRI"
+la var brientry "bri_entry"
+drop if iso3=="CHN"
+
+save all_reg_row.dta, replace
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+* +++++++ trade with BRI members ++++++++
+use all_reg_without_chn_v1.dta, clear
+keep if country_bri==1 & partner_bri==1
+sort country_iso3 year
+by country_iso3 year: egen total_import=sum(import)
+by country_iso3 year: egen total_export=sum(export)
+by country_iso3 year: egen total_trade=sum(trade)
+duplicates drop country_iso3 year country_entry country_bri country_brientry country_gdp ln_cty_gdp total_import total_export total_trade, force
+keep country_iso3 year country_entry country_bri country_brientry country_gdp ln_cty_gdp total_import total_export total_trade
+
+gen ln_import_bri=ln(total_import)
+gen ln_export_bri=ln(total_export)
+gen ln_trade_bri=ln(total_trade)
+
+rename country_iso3 iso3
+merge m:1 iso3 using country_classification.dta
+sort _merge
+drop if _merge!=3
+drop _merge
+
+save bri_row_bri_without_chn.dta, replace
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
